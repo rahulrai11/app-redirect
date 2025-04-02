@@ -6,46 +6,36 @@
     <title>Redirecting...</title>
     <script>
         function openApp() {
-            var appScheme = "myapp://home"; // Custom URL scheme
-            var appStoreLink = "https://apps.apple.com/in/app/bastian-customer-parts-portal/id6473263265"; // iOS App Store URL
-            var playStoreWeb = "https://play.google.com/store/apps/details?id=com.bastianqrapp"; // Play Store URL
-            var universalLink = "https://rahulrai11.github.io/app-redirect/"; // Replace with your Universal Link
+            var appScheme = "myapp://home"; // Ensure this matches your AndroidManifest.xml
+            var playStoreWeb = "https://play.google.com/store/apps/details?id=com.bastianqrapp";
+            var appStoreLink = "https://apps.apple.com/in/app/bastian-customer-parts-portal/id6473263265"; // Replace with actual App Store link
 
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-            // Open the app using Universal Links for iOS
-            if (/iPhone|iPad|iPod/i.test(userAgent)) {
-                // window.location.href = universalLink;
+            // Open the app using a hidden link
+            var link = document.createElement('a');
+            link.href = appScheme;
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
 
-                // Redirect to App Store if the app is not installed
-                setTimeout(function () {
+            // If app is not installed, redirect after 2 seconds
+            setTimeout(function () {
+                if (/android/i.test(userAgent)) {
+                    //window.location.href = playStoreWeb;
+                    window.location.href = "intent://play.google.com/store/apps/details?id=com.bastianqrapp#Intent;package=com.android.vending;scheme=https;end;";
+                } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
                     window.location.href = appStoreLink;
-                }, 1000);
-            } 
-            // Handle Android redirection
-            else if (/android/i.test(userAgent)) {
-                // Attempt to open the app via scheme
-                var link = document.createElement('a');
-                link.href = appScheme;
-                link.style.display = "none";
-                document.body.appendChild(link);
-                link.click();
-
-                // Redirect to Play Store if app is not installed
-                setTimeout(function () {
+                } else {
                     window.location.href = playStoreWeb;
-                }, 500);
-            } 
-            // Default fallback for other devices
-            else {
-                window.location.href = playStoreWeb;
-            }
+                }
+            }, 500);
         }
 
         window.onload = openApp;
     </script>
 </head>
 <body>
-    <p>Redirecting...! If nothing happens, <a href="myapp://home">click here...</a>.</p>
+    <p>Redirecting... If nothing happens, <a href="myapp://open">click here</a>.</p>
 </body>
 </html>
