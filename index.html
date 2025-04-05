@@ -42,7 +42,10 @@
 
 
 <script type="text/javascript">
-    const schemeURL = "myapp://productId/22-100525-07-02-71892";
+    // const schemeURL = "myapp://productId/22-100525-07-02-71892";
+    const path = window.location.pathname; // e.g., /profile/123
+    const schemeURL = `myapp://${path}`;   // deep link to app
+
     var androidStore = "https://play.google.com/store/apps/details?id=com.bastianqrapp";
     var iosStore = "https://apps.apple.com/in/app/bastian-customer-parts-portal/id6473263265"; // Replace with actual App Store link
 
