@@ -53,10 +53,17 @@
         const now = Date.now();
         window.location = schemeURL;
 
+        // setTimeout(() => {
+        //     if (Date.now() - now < 2000) {
+        //         window.location = /iPhone|iPad|iPod/.test(navigator.userAgent) ? iosStore : androidStore;
+        //     }
+        // }, 1500);
+
+        // If app isn't installed, fallback after timeout
         setTimeout(() => {
-            if (Date.now() - now < 2000) {
-                window.location = /iPhone|iPad|iPod/.test(navigator.userAgent) ? iosStore : androidStore;
-            }
+            const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+            const fallback = isIOS ? appStore : playStore;
+            window.location = fallback;
         }, 1500);
     }
 
