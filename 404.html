@@ -4,4 +4,10 @@
     var newUrl = "myapp://" + path.replace(/^\/+/, '');  // Remove extra slashes
     console.log("Redirecting to:", newUrl);
     window.location.replace(newUrl);
+
+    setTimeout(() => {
+            if (Date.now() - now < 2000) {
+                window.location = /iPhone|iPad|iPod/.test(navigator.userAgent) ? iosStore : androidStore;
+            }
+        }, 1500);
 </script>
