@@ -1,7 +1,50 @@
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var path = window.location.pathname;
     // var newUrl = "myapp://" + path;
     var newUrl = "myapp://" + path.replace(/^\/+/, '');  // Remove extra slashes
     console.log("Redirecting to:", newUrl);
     window.location.replace(newUrl);
-</script>
+</script> -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Redirecting to App...</title>
+    <meta charset="UTF-8" />
+    <script type="text/javascript">
+        const path = window.location.pathname; // /app-redirect/1234334
+        const customURL = "myapp://" + path; // Deep link to app
+        // const playStoreURL = "https://play.google.com/store/apps/details?id=com.yourapp"; // Replace with your actual package name
+        // const appStoreURL = "https://apps.apple.com/app/id123456789"; // Replace with your actual App Store link
+
+        var playStoreURL = "https://play.google.com/store/apps/details?id=com.bastianqrapp";
+        var appStoreURL = "https://apps.apple.com/in/app/bastian-customer-parts-portal/id6473263265"; // Replace with actual App Store link
+
+
+        // Detect platform
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        // Start redirect
+        window.onload = function () {
+            // Try opening the app
+            window.location.href = customURL;
+
+            // After timeout, assume app not installed, redirect to store
+            setTimeout(() => {
+                if (isAndroid) {
+                    window.location.href = playStoreURL;
+                } else if (isiOS) {
+                    window.location.href = appStoreURL;
+                }
+            }, 2000); // 2 seconds fallback
+        };
+    </script>
+</head>
+
+<body>
+    <p>Redirecting to the app...</p>
+</body>
+
+</html>
