@@ -13,16 +13,17 @@
     <title>Redirecting to App...</title>
     <meta charset="UTF-8" />
     <script type="text/javascript">
-        const path = window.location.pathname; // /app-redirect/1234334
-        const customURL = "myapp://" + path; // Deep link to app
+        const path = window.location.pathname;
+        const customURL = "myapp://" + path;
 
         var playStoreURL = "https://play.google.com/store/apps/details?id=com.bastianqrapp";
         var appStoreURL = "https://apps.apple.com/in/app/bastian-customer-parts-portal/id6473263265"; // Replace with actual App Store link
 
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
         // Detect platform
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        const isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(userAgent);
+        const isiOS = /iPhone|iPad|iPod/i.test(userAgent);
 
         // Start redirect
         window.onload = function () {
@@ -35,6 +36,8 @@
                     window.location.href = playStoreURL;
                 } else if (isiOS) {
                     window.location.href = appStoreURL;
+                } else {
+                    window.location.href = playStoreURL;
                 }
             }, 500); // 1/2 seconds fallback
         };
